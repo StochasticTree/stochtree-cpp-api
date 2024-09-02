@@ -1,0 +1,997 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="prev" title="Dataset API" href="dataset.html" />
+
+    <!-- Generated with Sphinx 7.1.2 and Furo 2024.05.06 -->
+        <title>Decision Tree API - stochtree 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=387cc868" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=36a5483c" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" /
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">stochtree 0.0.1 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  
+  
+  <span class="sidebar-brand-text">stochtree 0.0.1 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="dataset.html">Dataset API</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Decision Tree API</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="_sources/tree.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="decision-tree-api">
+<h1>Decision Tree API<a class="headerlink" href="#decision-tree-api" title="Permalink to this heading">¶</a></h1>
+<section id="tree">
+<h2>Tree<a class="headerlink" href="#tree" title="Permalink to this heading">¶</a></h2>
+<p>The fundamental building block of the C++ tree interface is the <code class="docutils literal notranslate"><span class="pre">Tree</span></code> class.</p>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree4TreeE">
+<span id="_CPPv3N9StochTree4TreeE"></span><span id="_CPPv2N9StochTree4TreeE"></span><span id="StochTree::Tree"></span><span class="target" id="classStochTree_1_1Tree"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Tree</span></span></span><a class="headerlink" href="#_CPPv4N9StochTree4TreeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>API for constructing decision trees (splitting, pruning, setting parameter values) </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree4Tree13CloneFromTreeEP4Tree">
+<span id="_CPPv3N9StochTree4Tree13CloneFromTreeEP4Tree"></span><span id="_CPPv2N9StochTree4Tree13CloneFromTreeEP4Tree"></span><span id="StochTree::Tree::CloneFromTree__TreeP"></span><span class="target" id="classStochTree_1_1Tree_1a0d5af3677b851d6d202166c76111bc88"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">CloneFromTree</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N9StochTree4TreeE" title="StochTree::Tree"><span class="n"><span class="pre">Tree</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">tree</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9StochTree4Tree13CloneFromTreeEP4Tree" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Copy the structure and parameters of another tree. If the <code class="docutils literal notranslate"><a class="reference internal" href="#classStochTree_1_1Tree"><span class="std std-ref"><span class="pre">Tree</span></span></a></code> object calling this method already has a non-root tree structure / parameters, this will be erased and replaced with a copy of <code class="docutils literal notranslate"><span class="pre">tree</span></code>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tree</strong> – <a class="reference internal" href="#classStochTree_1_1Tree"><span class="std std-ref">Tree</span></a> to be cloned </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree4Tree5ResetEv">
+<span id="_CPPv3N9StochTree4Tree5ResetEv"></span><span id="_CPPv2N9StochTree4Tree5ResetEv"></span><span id="StochTree::Tree::Reset"></span><span class="target" id="classStochTree_1_1Tree_1ac9e4a75ba507e01a1d0a45b99de51581"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Reset</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9StochTree4Tree5ResetEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Reset tree to empty vectors and default values of boolean / integer variables. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree4Tree4InitEi">
+<span id="_CPPv3N9StochTree4Tree4InitEi"></span><span id="_CPPv2N9StochTree4Tree4InitEi"></span><span id="StochTree::Tree::Init__i"></span><span class="target" id="classStochTree_1_1Tree_1a486212ba79a8cc70db6a42d3e580ad41"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Init</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">output_dimension</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">1</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9StochTree4Tree4InitEi" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Initialize the tree with a single root node. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree4Tree9AllocNodeEv">
+<span id="_CPPv3N9StochTree4Tree9AllocNodeEv"></span><span id="_CPPv2N9StochTree4Tree9AllocNodeEv"></span><span id="StochTree::Tree::AllocNode"></span><span class="target" id="classStochTree_1_1Tree_1a1aa980cf6164ec661849054fa93327d1"></span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">AllocNode</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9StochTree4Tree9AllocNodeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Allocate a new node and return the node’s ID. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree4Tree10DeleteNodeENSt7int32_tE">
+<span id="_CPPv3N9StochTree4Tree10DeleteNodeENSt7int32_tE"></span><span id="_CPPv2N9StochTree4Tree10DeleteNodeENSt7int32_tE"></span><span id="StochTree::Tree::DeleteNode__std::int32_t"></span><span class="target" id="classStochTree_1_1Tree_1a68e92c1be08a62e1d4effde8579a1cd6"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DeleteNode</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nid</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9StochTree4Tree10DeleteNodeENSt7int32_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Deletes node indexed by node ID. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree4Tree10ExpandNodeENSt7int32_tEiddd">
+<span id="_CPPv3N9StochTree4Tree10ExpandNodeENSt7int32_tEiddd"></span><span id="_CPPv2N9StochTree4Tree10ExpandNodeENSt7int32_tEiddd"></span><span id="StochTree::Tree::ExpandNode__std::int32_t.i.double.double.double"></span><span class="target" id="classStochTree_1_1Tree_1adb9982820b8da3925d4f478295e42903"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ExpandNode</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nid</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">split_index</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">split_value</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">left_value</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">right_value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9StochTree4Tree10ExpandNodeENSt7int32_tEiddd" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Expand a node based on a numeric split rule. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree4Tree10ExpandNodeENSt7int32_tEiRKNSt6vectorINSt8uint32_tEEEdd">
+<span id="_CPPv3N9StochTree4Tree10ExpandNodeENSt7int32_tEiRKNSt6vectorINSt8uint32_tEEEdd"></span><span id="_CPPv2N9StochTree4Tree10ExpandNodeENSt7int32_tEiRKNSt6vectorINSt8uint32_tEEEdd"></span><span id="StochTree::Tree::ExpandNode__std::int32_t.i.std::vector:std::uint32_t:CR.double.double"></span><span class="target" id="classStochTree_1_1Tree_1ac0d615ca506178277d37d57897994de9"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ExpandNode</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nid</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">split_index</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">uint32_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">categorical_indices</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">left_value</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">right_value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9StochTree4Tree10ExpandNodeENSt7int32_tEiRKNSt6vectorINSt8uint32_tEEEdd" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Expand a node based on a categorical split rule. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree4Tree10ExpandNodeENSt7int32_tEidNSt6vectorIdEENSt6vectorIdEE">
+<span id="_CPPv3N9StochTree4Tree10ExpandNodeENSt7int32_tEidNSt6vectorIdEENSt6vectorIdEE"></span><span id="_CPPv2N9StochTree4Tree10ExpandNodeENSt7int32_tEidNSt6vectorIdEENSt6vectorIdEE"></span><span id="StochTree::Tree::ExpandNode__std::int32_t.i.double.std::vector:double:.std::vector:double:"></span><span class="target" id="classStochTree_1_1Tree_1a316a5d502d7fd79ce54c9b4460181183"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ExpandNode</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nid</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">split_index</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">split_value</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">left_value_vector</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">right_value_vector</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9StochTree4Tree10ExpandNodeENSt7int32_tEidNSt6vectorIdEENSt6vectorIdEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Expand a node based on a numeric split rule. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree4Tree10ExpandNodeENSt7int32_tEiRKNSt6vectorINSt8uint32_tEEENSt6vectorIdEENSt6vectorIdEE">
+<span id="_CPPv3N9StochTree4Tree10ExpandNodeENSt7int32_tEiRKNSt6vectorINSt8uint32_tEEENSt6vectorIdEENSt6vectorIdEE"></span><span id="_CPPv2N9StochTree4Tree10ExpandNodeENSt7int32_tEiRKNSt6vectorINSt8uint32_tEEENSt6vectorIdEENSt6vectorIdEE"></span><span id="StochTree::Tree::ExpandNode__std::int32_t.i.std::vector:std::uint32_t:CR.std::vector:double:.std::vector:double:"></span><span class="target" id="classStochTree_1_1Tree_1ae34c639e57815209146540b4cf3ecc15"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ExpandNode</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nid</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">split_index</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">uint32_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">categorical_indices</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">left_value_vector</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">right_value_vector</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9StochTree4Tree10ExpandNodeENSt7int32_tEiRKNSt6vectorINSt8uint32_tEEENSt6vectorIdEENSt6vectorIdEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Expand a node based on a categorical split rule. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree4Tree10ExpandNodeENSt7int32_tEiR9TreeSplitdd">
+<span id="_CPPv3N9StochTree4Tree10ExpandNodeENSt7int32_tEiR9TreeSplitdd"></span><span id="_CPPv2N9StochTree4Tree10ExpandNodeENSt7int32_tEiR9TreeSplitdd"></span><span id="StochTree::Tree::ExpandNode__std::int32_t.i.TreeSplitR.double.double"></span><span class="target" id="classStochTree_1_1Tree_1a73db9f0d0e7955b2f8c4aff0a02cf20e"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ExpandNode</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nid</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">split_index</span></span>, <a class="reference internal" href="#_CPPv4N9StochTree9TreeSplitE" title="StochTree::TreeSplit"><span class="n"><span class="pre">TreeSplit</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">split</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">left_value</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">right_value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9StochTree4Tree10ExpandNodeENSt7int32_tEiR9TreeSplitdd" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Expand a node based on a generic split rule. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree4Tree10ExpandNodeENSt7int32_tEiR9TreeSplitNSt6vectorIdEENSt6vectorIdEE">
+<span id="_CPPv3N9StochTree4Tree10ExpandNodeENSt7int32_tEiR9TreeSplitNSt6vectorIdEENSt6vectorIdEE"></span><span id="_CPPv2N9StochTree4Tree10ExpandNodeENSt7int32_tEiR9TreeSplitNSt6vectorIdEENSt6vectorIdEE"></span><span id="StochTree::Tree::ExpandNode__std::int32_t.i.TreeSplitR.std::vector:double:.std::vector:double:"></span><span class="target" id="classStochTree_1_1Tree_1a73e7ff8daa805c490f9b6aaa996dc8e3"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ExpandNode</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nid</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">split_index</span></span>, <a class="reference internal" href="#_CPPv4N9StochTree9TreeSplitE" title="StochTree::TreeSplit"><span class="n"><span class="pre">TreeSplit</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">split</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">left_value_vector</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">right_value_vector</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9StochTree4Tree10ExpandNodeENSt7int32_tEiR9TreeSplitNSt6vectorIdEENSt6vectorIdEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Expand a node based on a generic split rule. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree4Tree6IsRootEv">
+<span id="_CPPv3N9StochTree4Tree6IsRootEv"></span><span id="_CPPv2N9StochTree4Tree6IsRootEv"></span><span id="StochTree::Tree::IsRoot"></span><span class="target" id="classStochTree_1_1Tree_1a9bbba422934228a405cbc27ae743d675"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">IsRoot</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9StochTree4Tree6IsRootEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Whether or not a tree is a “stump” consisting of a single root node. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree4Tree7to_jsonEv">
+<span id="_CPPv3N9StochTree4Tree7to_jsonEv"></span><span id="_CPPv2N9StochTree4Tree7to_jsonEv"></span><span id="StochTree::Tree::to_json"></span><span class="target" id="classStochTree_1_1Tree_1afc043169c2e6237947a350893493c847"></span><span class="n"><span class="pre">json</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">to_json</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9StochTree4Tree7to_jsonEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Convert tree to JSON and return JSON in-memory. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree4Tree9from_jsonERK4json">
+<span id="_CPPv3N9StochTree4Tree9from_jsonERK4json"></span><span id="_CPPv2N9StochTree4Tree9from_jsonERK4json"></span><span id="StochTree::Tree::from_json__jsonCR"></span><span class="target" id="classStochTree_1_1Tree_1a5b5d8b73bd138c5ae6d52de5eeebf01d"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">from_json</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">json</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">tree_json</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9StochTree4Tree9from_jsonERK4json" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Load from JSON. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tree_json</strong> – In-memory json object (of type <code class="docutils literal notranslate"><span class="pre">nlohmann::json</span></code>) </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree4Tree14CollapseToLeafENSt7int32_tEd">
+<span id="_CPPv3N9StochTree4Tree14CollapseToLeafENSt7int32_tEd"></span><span id="_CPPv2N9StochTree4Tree14CollapseToLeafENSt7int32_tEd"></span><span id="StochTree::Tree::CollapseToLeaf__std::int32_t.double"></span><span class="target" id="classStochTree_1_1Tree_1aebc0636fe0511491d1bdc435c0e8a09d"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">CollapseToLeaf</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nid</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9StochTree4Tree14CollapseToLeafENSt7int32_tEd" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Collapse an internal node to a leaf node, deleting its children from the tree. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nid</strong> – Node id of the new leaf node </p></li>
+<li><p><strong>value_vector</strong> – New leaf value </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree4Tree14CollapseToLeafENSt7int32_tENSt6vectorIdEE">
+<span id="_CPPv3N9StochTree4Tree14CollapseToLeafENSt7int32_tENSt6vectorIdEE"></span><span id="_CPPv2N9StochTree4Tree14CollapseToLeafENSt7int32_tENSt6vectorIdEE"></span><span id="StochTree::Tree::CollapseToLeaf__std::int32_t.std::vector:double:"></span><span class="target" id="classStochTree_1_1Tree_1abb6c1b5bd18b4b6f8721bde73900563d"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">CollapseToLeaf</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nid</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">value_vector</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9StochTree4Tree14CollapseToLeafENSt7int32_tENSt6vectorIdEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Collapse an internal node to a leaf node, deleting its children from the tree. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nid</strong> – Node id of the new leaf node </p></li>
+<li><p><strong>value_vector</strong> – New leaf vector value </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4I0ENK9StochTree4Tree8WalkTreeEv4Func">
+<span id="_CPPv3I0ENK9StochTree4Tree8WalkTreeE4Func"></span><span id="_CPPv2I0ENK9StochTree4Tree8WalkTreeE4Func"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Func</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classStochTree_1_1Tree_1a2044523457ee1b4a6803013b8541727c"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">WalkTree</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0ENK9StochTree4Tree8WalkTreeEv4Func" title="StochTree::Tree::WalkTree::Func"><span class="n"><span class="pre">Func</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">func</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4I0ENK9StochTree4Tree8WalkTreeEv4Func" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Iterate through all nodes in this tree. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>Func</strong> – Function object type, must map <code class="docutils literal notranslate"><span class="pre">std::int32_t</span></code> to <code class="docutils literal notranslate"><span class="pre">bool</span></code>. </p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>func</strong> – Function that accepts a node index and returns <code class="docutils literal notranslate"><span class="pre">False</span></code> when iteration through a given branch of the tree should stop and <code class="docutils literal notranslate"><span class="pre">True</span></code> otherwise. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9StochTree4Tree15HasVectorOutputEv">
+<span id="_CPPv3NK9StochTree4Tree15HasVectorOutputEv"></span><span id="_CPPv2NK9StochTree4Tree15HasVectorOutputEv"></span><span id="StochTree::Tree::HasVectorOutputC"></span><span class="target" id="classStochTree_1_1Tree_1a7d63b293f12e79e69d23933efe8ada2e"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">HasVectorOutput</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9StochTree4Tree15HasVectorOutputEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Whether or not a tree has vector output. </p>
+<p>Getters </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9StochTree4Tree15OutputDimensionEv">
+<span id="_CPPv3NK9StochTree4Tree15OutputDimensionEv"></span><span id="_CPPv2NK9StochTree4Tree15OutputDimensionEv"></span><span id="StochTree::Tree::OutputDimensionC"></span><span class="target" id="classStochTree_1_1Tree_1a75333e8ccb11dc78ba330f8bd88318e4"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">OutputDimension</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9StochTree4Tree15OutputDimensionEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Dimension of tree output. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9StochTree4Tree6ParentENSt7int32_tE">
+<span id="_CPPv3NK9StochTree4Tree6ParentENSt7int32_tE"></span><span id="_CPPv2NK9StochTree4Tree6ParentENSt7int32_tE"></span><span id="StochTree::Tree::Parent__std::int32_tC"></span><span class="target" id="classStochTree_1_1Tree_1a49ce6b5d93d1368b42560adbe9b3edbf"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Parent</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nid</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9StochTree4Tree6ParentENSt7int32_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Index of the node’s parent. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nid</strong> – ID of node being queried </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9StochTree4Tree9LeftChildENSt7int32_tE">
+<span id="_CPPv3NK9StochTree4Tree9LeftChildENSt7int32_tE"></span><span id="_CPPv2NK9StochTree4Tree9LeftChildENSt7int32_tE"></span><span id="StochTree::Tree::LeftChild__std::int32_tC"></span><span class="target" id="classStochTree_1_1Tree_1a0ba0c2b6144983ac9871b8d797020a32"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">LeftChild</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nid</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9StochTree4Tree9LeftChildENSt7int32_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Index of the node’s left child. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nid</strong> – ID of node being queried </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9StochTree4Tree10RightChildENSt7int32_tE">
+<span id="_CPPv3NK9StochTree4Tree10RightChildENSt7int32_tE"></span><span id="_CPPv2NK9StochTree4Tree10RightChildENSt7int32_tE"></span><span id="StochTree::Tree::RightChild__std::int32_tC"></span><span class="target" id="classStochTree_1_1Tree_1a0d89cccf5981e7e2330045e61d1c9233"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">RightChild</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nid</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9StochTree4Tree10RightChildENSt7int32_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Index of the node’s right child. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nid</strong> – ID of node being queried </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9StochTree4Tree12DefaultChildENSt7int32_tE">
+<span id="_CPPv3NK9StochTree4Tree12DefaultChildENSt7int32_tE"></span><span id="_CPPv2NK9StochTree4Tree12DefaultChildENSt7int32_tE"></span><span id="StochTree::Tree::DefaultChild__std::int32_tC"></span><span class="target" id="classStochTree_1_1Tree_1a238adbf4cff2c624df7933b9f843ee28"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DefaultChild</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nid</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9StochTree4Tree12DefaultChildENSt7int32_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Index of the node’s “default” child (potentially used in the case of a missing feature at prediction time) </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nid</strong> – ID of node being queried </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9StochTree4Tree10SplitIndexENSt7int32_tE">
+<span id="_CPPv3NK9StochTree4Tree10SplitIndexENSt7int32_tE"></span><span id="_CPPv2NK9StochTree4Tree10SplitIndexENSt7int32_tE"></span><span id="StochTree::Tree::SplitIndex__std::int32_tC"></span><span class="target" id="classStochTree_1_1Tree_1a17586ad05219ad6796f24f0e22741960"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SplitIndex</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nid</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9StochTree4Tree10SplitIndexENSt7int32_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Feature index defining the node’s split rule. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nid</strong> – ID of node being queried </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9StochTree4Tree6IsLeafENSt7int32_tE">
+<span id="_CPPv3NK9StochTree4Tree6IsLeafENSt7int32_tE"></span><span id="_CPPv2NK9StochTree4Tree6IsLeafENSt7int32_tE"></span><span id="StochTree::Tree::IsLeaf__std::int32_tC"></span><span class="target" id="classStochTree_1_1Tree_1a1d2957ea805cc3824147ce71120fe9ab"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">IsLeaf</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nid</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9StochTree4Tree6IsLeafENSt7int32_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Whether the node is a leaf node. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nid</strong> – ID of node being queried </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9StochTree4Tree6IsRootENSt7int32_tE">
+<span id="_CPPv3NK9StochTree4Tree6IsRootENSt7int32_tE"></span><span id="_CPPv2NK9StochTree4Tree6IsRootENSt7int32_tE"></span><span id="StochTree::Tree::IsRoot__std::int32_tC"></span><span class="target" id="classStochTree_1_1Tree_1ac29274f1e35fa80167b3f1bbdbc735f9"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">IsRoot</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nid</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9StochTree4Tree6IsRootENSt7int32_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Whether the node is root. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nid</strong> – ID of node being queried </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9StochTree4Tree9IsDeletedENSt7int32_tE">
+<span id="_CPPv3NK9StochTree4Tree9IsDeletedENSt7int32_tE"></span><span id="_CPPv2NK9StochTree4Tree9IsDeletedENSt7int32_tE"></span><span id="StochTree::Tree::IsDeleted__std::int32_tC"></span><span class="target" id="classStochTree_1_1Tree_1ad9959b8782e43a4cef47fd0c5c65f544"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">IsDeleted</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nid</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9StochTree4Tree9IsDeletedENSt7int32_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Whether the node has been deleted. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nid</strong> – ID of node being queried </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9StochTree4Tree9LeafValueENSt7int32_tE">
+<span id="_CPPv3NK9StochTree4Tree9LeafValueENSt7int32_tE"></span><span id="_CPPv2NK9StochTree4Tree9LeafValueENSt7int32_tE"></span><span id="StochTree::Tree::LeafValue__std::int32_tC"></span><span class="target" id="classStochTree_1_1Tree_1a9bcf52371b866aa5e36386c85e8a015b"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">LeafValue</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nid</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9StochTree4Tree9LeafValueENSt7int32_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Get parameter value of a node (typically though not necessarily a leaf node) </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nid</strong> – ID of node being queried </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9StochTree4Tree9LeafValueENSt7int32_tENSt7int32_tE">
+<span id="_CPPv3NK9StochTree4Tree9LeafValueENSt7int32_tENSt7int32_tE"></span><span id="_CPPv2NK9StochTree4Tree9LeafValueENSt7int32_tENSt7int32_tE"></span><span id="StochTree::Tree::LeafValue__std::int32_t.std::int32_tC"></span><span class="target" id="classStochTree_1_1Tree_1a577f57d27e49fb5bfc890971168bc99f"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">LeafValue</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nid</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">dim_id</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9StochTree4Tree9LeafValueENSt7int32_tENSt7int32_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Get parameter value of a node (typically though not necessarily a leaf node) at a given output dimension. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nid</strong> – ID of node being queried </p></li>
+<li><p><strong>dim_id</strong> – Output dimension being queried </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9StochTree4Tree12MaxLeafDepthEv">
+<span id="_CPPv3NK9StochTree4Tree12MaxLeafDepthEv"></span><span id="_CPPv2NK9StochTree4Tree12MaxLeafDepthEv"></span><span id="StochTree::Tree::MaxLeafDepthC"></span><span class="target" id="classStochTree_1_1Tree_1a6abc048b6f39956d15fef71bc5a2efa3"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">MaxLeafDepth</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9StochTree4Tree12MaxLeafDepthEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Get maximum depth of all of the leaf nodes. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9StochTree4Tree10LeafVectorENSt7int32_tE">
+<span id="_CPPv3NK9StochTree4Tree10LeafVectorENSt7int32_tE"></span><span id="_CPPv2NK9StochTree4Tree10LeafVectorENSt7int32_tE"></span><span id="StochTree::Tree::LeafVector__std::int32_tC"></span><span class="target" id="classStochTree_1_1Tree_1a8776006616893e2d5cc28b1a1862dcf7"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">LeafVector</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nid</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9StochTree4Tree10LeafVectorENSt7int32_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Get vector-valued parameters of a node (typically leaf) </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nid</strong> – ID of node being queried </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9StochTree4Tree20SumSquaredNodeValuesENSt7int32_tE">
+<span id="_CPPv3NK9StochTree4Tree20SumSquaredNodeValuesENSt7int32_tE"></span><span id="_CPPv2NK9StochTree4Tree20SumSquaredNodeValuesENSt7int32_tE"></span><span id="StochTree::Tree::SumSquaredNodeValues__std::int32_tC"></span><span class="target" id="classStochTree_1_1Tree_1a6774e670589e6de6259113b3372f40e6"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SumSquaredNodeValues</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nid</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9StochTree4Tree20SumSquaredNodeValuesENSt7int32_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sum of squared parameter values for a given node (typically though not necessarily a leaf node) </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nid</strong> – ID of node being queried </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9StochTree4Tree20SumSquaredLeafValuesEv">
+<span id="_CPPv3NK9StochTree4Tree20SumSquaredLeafValuesEv"></span><span id="_CPPv2NK9StochTree4Tree20SumSquaredLeafValuesEv"></span><span id="StochTree::Tree::SumSquaredLeafValuesC"></span><span class="target" id="classStochTree_1_1Tree_1a208e84bcaae414903db46b83b541a99c"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SumSquaredLeafValues</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9StochTree4Tree20SumSquaredLeafValuesEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sum of squared values for all leaves in a tree. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9StochTree4Tree13HasLeafVectorENSt7int32_tE">
+<span id="_CPPv3NK9StochTree4Tree13HasLeafVectorENSt7int32_tE"></span><span id="_CPPv2NK9StochTree4Tree13HasLeafVectorENSt7int32_tE"></span><span id="StochTree::Tree::HasLeafVector__std::int32_tC"></span><span class="target" id="classStochTree_1_1Tree_1ab6b538c9c4d330e58e59dfc42e2c0a20"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">HasLeafVector</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nid</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9StochTree4Tree13HasLeafVectorENSt7int32_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Tests whether the leaf node has a non-empty leaf vector. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nid</strong> – ID of node being queried </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9StochTree4Tree9ThresholdENSt7int32_tE">
+<span id="_CPPv3NK9StochTree4Tree9ThresholdENSt7int32_tE"></span><span id="_CPPv2NK9StochTree4Tree9ThresholdENSt7int32_tE"></span><span id="StochTree::Tree::Threshold__std::int32_tC"></span><span class="target" id="classStochTree_1_1Tree_1abe5e43bf8180ef96a39a94cb22ba8721"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Threshold</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nid</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9StochTree4Tree9ThresholdENSt7int32_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Get split threshold of the node. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nid</strong> – ID of node being queried </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9StochTree4Tree12CategoryListENSt7int32_tE">
+<span id="_CPPv3NK9StochTree4Tree12CategoryListENSt7int32_tE"></span><span id="_CPPv2NK9StochTree4Tree12CategoryListENSt7int32_tE"></span><span id="StochTree::Tree::CategoryList__std::int32_tC"></span><span class="target" id="classStochTree_1_1Tree_1af50e330b38fc907bd3375ec5f511512e"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">uint32_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">CategoryList</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nid</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9StochTree4Tree12CategoryListENSt7int32_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Get list of all categories belonging to the left child node. Categories are integers ranging from 0 to (n-1), where n is the number of categories in that particular feature. This list is assumed to be in ascending order. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nid</strong> – ID of node being queried </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9StochTree4Tree8NodeTypeENSt7int32_tE">
+<span id="_CPPv3NK9StochTree4Tree8NodeTypeENSt7int32_tE"></span><span id="_CPPv2NK9StochTree4Tree8NodeTypeENSt7int32_tE"></span><span id="StochTree::Tree::NodeType__std::int32_tC"></span><span class="target" id="classStochTree_1_1Tree_1a64270f46b452eec9ce21e9a2f4f84faf"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">TreeNodeType</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">NodeType</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nid</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9StochTree4Tree8NodeTypeENSt7int32_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Get the type of a node (i.e. numeric split, categorical split, leaf) </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nid</strong> – ID of node being queried </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9StochTree4Tree19HasCategoricalSplitEv">
+<span id="_CPPv3NK9StochTree4Tree19HasCategoricalSplitEv"></span><span id="_CPPv2NK9StochTree4Tree19HasCategoricalSplitEv"></span><span id="StochTree::Tree::HasCategoricalSplitC"></span><span class="target" id="classStochTree_1_1Tree_1a53eb4992503f1d47f0bf8edb4cd6456c"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">HasCategoricalSplit</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9StochTree4Tree19HasCategoricalSplitEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Query whether this tree contains any categorical splits. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9StochTree4Tree16GetInternalNodesEv">
+<span id="_CPPv3NK9StochTree4Tree16GetInternalNodesEv"></span><span id="_CPPv2NK9StochTree4Tree16GetInternalNodesEv"></span><span id="StochTree::Tree::GetInternalNodesC"></span><span class="target" id="classStochTree_1_1Tree_1a87b1cf09f309697a6d411efbe9782b3d"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">GetInternalNodes</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9StochTree4Tree16GetInternalNodesEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Get indices of all internal nodes. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9StochTree4Tree9GetLeavesEv">
+<span id="_CPPv3NK9StochTree4Tree9GetLeavesEv"></span><span id="_CPPv2NK9StochTree4Tree9GetLeavesEv"></span><span id="StochTree::Tree::GetLeavesC"></span><span class="target" id="classStochTree_1_1Tree_1ae9900cab021d37bd8a5ce9d79df2073c"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">GetLeaves</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9StochTree4Tree9GetLeavesEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Get indices of all leaf nodes. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9StochTree4Tree14GetLeafParentsEv">
+<span id="_CPPv3NK9StochTree4Tree14GetLeafParentsEv"></span><span id="_CPPv2NK9StochTree4Tree14GetLeafParentsEv"></span><span id="StochTree::Tree::GetLeafParentsC"></span><span class="target" id="classStochTree_1_1Tree_1aa639063b287ec37f49786bc6b2528954"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">GetLeafParents</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9StochTree4Tree14GetLeafParentsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Get indices of all leaf parent nodes. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9StochTree4Tree8GetDepthENSt7int32_tE">
+<span id="_CPPv3NK9StochTree4Tree8GetDepthENSt7int32_tE"></span><span id="_CPPv2NK9StochTree4Tree8GetDepthENSt7int32_tE"></span><span id="StochTree::Tree::GetDepth__std::int32_tC"></span><span class="target" id="classStochTree_1_1Tree_1af42c55f528ffb05c71554447b6b750f9"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GetDepth</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nid</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9StochTree4Tree8GetDepthENSt7int32_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Get the depth of a node. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nid</strong> – node id </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9StochTree4Tree8NumNodesEv">
+<span id="_CPPv3NK9StochTree4Tree8NumNodesEv"></span><span id="_CPPv2NK9StochTree4Tree8NumNodesEv"></span><span id="StochTree::Tree::NumNodesC"></span><span class="target" id="classStochTree_1_1Tree_1a63b878f5e7ac99ba5fabf85fc70a075a"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">NumNodes</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4NK9StochTree4Tree8NumNodesEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Get the total number of nodes including deleted ones in this tree. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9StochTree4Tree15NumDeletedNodesEv">
+<span id="_CPPv3NK9StochTree4Tree15NumDeletedNodesEv"></span><span id="_CPPv2NK9StochTree4Tree15NumDeletedNodesEv"></span><span id="StochTree::Tree::NumDeletedNodesC"></span><span class="target" id="classStochTree_1_1Tree_1a899b94ddf45a2a9a8e7b451b65f3213a"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">NumDeletedNodes</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4NK9StochTree4Tree15NumDeletedNodesEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Get the total number of deleted nodes in this tree. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9StochTree4Tree13NumValidNodesEv">
+<span id="_CPPv3NK9StochTree4Tree13NumValidNodesEv"></span><span id="_CPPv2NK9StochTree4Tree13NumValidNodesEv"></span><span id="StochTree::Tree::NumValidNodesC"></span><span class="target" id="classStochTree_1_1Tree_1a0e167c3945ef76d5c1ceb62c0b17497c"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">NumValidNodes</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4NK9StochTree4Tree13NumValidNodesEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Get the total number of valid nodes in this tree. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree4Tree12SetLeftChildENSt7int32_tENSt7int32_tE">
+<span id="_CPPv3N9StochTree4Tree12SetLeftChildENSt7int32_tENSt7int32_tE"></span><span id="_CPPv2N9StochTree4Tree12SetLeftChildENSt7int32_tENSt7int32_tE"></span><span id="StochTree::Tree::SetLeftChild__std::int32_t.std::int32_t"></span><span class="target" id="classStochTree_1_1Tree_1a0a0f4857e97e85e7d9eb4c62df4799a5"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SetLeftChild</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nid</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">left_child</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9StochTree4Tree12SetLeftChildENSt7int32_tENSt7int32_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Identify left child node. </p>
+<p>Setters</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nid</strong> – ID of node being modified </p></li>
+<li><p><strong>left_child</strong> – ID of the left child node </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree4Tree13SetRightChildENSt7int32_tENSt7int32_tE">
+<span id="_CPPv3N9StochTree4Tree13SetRightChildENSt7int32_tENSt7int32_tE"></span><span id="_CPPv2N9StochTree4Tree13SetRightChildENSt7int32_tENSt7int32_tE"></span><span id="StochTree::Tree::SetRightChild__std::int32_t.std::int32_t"></span><span class="target" id="classStochTree_1_1Tree_1adc8b4e96c95af2cc00ac8a5e741f09f0"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SetRightChild</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nid</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">right_child</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9StochTree4Tree13SetRightChildENSt7int32_tENSt7int32_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Identify right child node. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nid</strong> – ID of node being modified </p></li>
+<li><p><strong>right_child</strong> – ID of the right child node </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree4Tree11SetChildrenENSt7int32_tENSt7int32_tENSt7int32_tE">
+<span id="_CPPv3N9StochTree4Tree11SetChildrenENSt7int32_tENSt7int32_tENSt7int32_tE"></span><span id="_CPPv2N9StochTree4Tree11SetChildrenENSt7int32_tENSt7int32_tENSt7int32_tE"></span><span id="StochTree::Tree::SetChildren__std::int32_t.std::int32_t.std::int32_t"></span><span class="target" id="classStochTree_1_1Tree_1a8de4bd0f6169ace6113093480203cb5c"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SetChildren</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nid</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">left_child</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">right_child</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9StochTree4Tree11SetChildrenENSt7int32_tENSt7int32_tENSt7int32_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Identify two child nodes of the node and the corresponding parent node of the child nodes. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nid</strong> – ID of node being modified </p></li>
+<li><p><strong>left_child</strong> – ID of the left child node </p></li>
+<li><p><strong>right_child</strong> – ID of the right child node </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree4Tree9SetParentENSt7int32_tENSt7int32_tE">
+<span id="_CPPv3N9StochTree4Tree9SetParentENSt7int32_tENSt7int32_tE"></span><span id="_CPPv2N9StochTree4Tree9SetParentENSt7int32_tENSt7int32_tE"></span><span id="StochTree::Tree::SetParent__std::int32_t.std::int32_t"></span><span class="target" id="classStochTree_1_1Tree_1a938daf82e38591fab57290e2534bf0cc"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SetParent</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">child_node</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">parent_node</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9StochTree4Tree9SetParentENSt7int32_tENSt7int32_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Identify parent node. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>child_node</strong> – ID of child node </p></li>
+<li><p><strong>parent_node</strong> – ID of the parent node </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree4Tree10SetParentsENSt7int32_tENSt7int32_tENSt7int32_tE">
+<span id="_CPPv3N9StochTree4Tree10SetParentsENSt7int32_tENSt7int32_tENSt7int32_tE"></span><span id="_CPPv2N9StochTree4Tree10SetParentsENSt7int32_tENSt7int32_tENSt7int32_tE"></span><span id="StochTree::Tree::SetParents__std::int32_t.std::int32_t.std::int32_t"></span><span class="target" id="classStochTree_1_1Tree_1a9d31857764ad5cb4f9427f792b72b86d"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SetParents</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nid</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">left_child</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">right_child</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9StochTree4Tree10SetParentsENSt7int32_tENSt7int32_tENSt7int32_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Identify parent node of the left and right node ids. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nid</strong> – ID of parent node </p></li>
+<li><p><strong>left_child</strong> – ID of the left child node </p></li>
+<li><p><strong>right_child</strong> – ID of the right child node </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree4Tree15SetNumericSplitENSt7int32_tENSt7int32_tEd">
+<span id="_CPPv3N9StochTree4Tree15SetNumericSplitENSt7int32_tENSt7int32_tEd"></span><span id="_CPPv2N9StochTree4Tree15SetNumericSplitENSt7int32_tENSt7int32_tEd"></span><span id="StochTree::Tree::SetNumericSplit__std::int32_t.std::int32_t.double"></span><span class="target" id="classStochTree_1_1Tree_1a055f89caccf86d621dbd5908582442c8"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SetNumericSplit</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nid</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">split_index</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">threshold</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9StochTree4Tree15SetNumericSplitENSt7int32_tENSt7int32_tEd" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Create a numerical split. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nid</strong> – ID of node being updated </p></li>
+<li><p><strong>split_index</strong> – Feature index to split </p></li>
+<li><p><strong>threshold</strong> – Threshold value </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree4Tree19SetCategoricalSplitENSt7int32_tENSt7int32_tERKNSt6vectorINSt8uint32_tEEE">
+<span id="_CPPv3N9StochTree4Tree19SetCategoricalSplitENSt7int32_tENSt7int32_tERKNSt6vectorINSt8uint32_tEEE"></span><span id="_CPPv2N9StochTree4Tree19SetCategoricalSplitENSt7int32_tENSt7int32_tERKNSt6vectorINSt8uint32_tEEE"></span><span id="StochTree::Tree::SetCategoricalSplit__std::int32_t.std::int32_t.std::vector:std::uint32_t:CR"></span><span class="target" id="classStochTree_1_1Tree_1a16a9ad21ca379ddb3fdaf11c53497245"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SetCategoricalSplit</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nid</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">split_index</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">uint32_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">category_list</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9StochTree4Tree19SetCategoricalSplitENSt7int32_tENSt7int32_tERKNSt6vectorINSt8uint32_tEEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Create a categorical split. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nid</strong> – ID of node being updated </p></li>
+<li><p><strong>split_index</strong> – Feature index to split </p></li>
+<li><p><strong>category_list</strong> – List of categories to belong to either the right child node or the left child node. Set categories_list_right_child parameter to indicate which node the category list should represent. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree4Tree7SetLeafENSt7int32_tEd">
+<span id="_CPPv3N9StochTree4Tree7SetLeafENSt7int32_tEd"></span><span id="_CPPv2N9StochTree4Tree7SetLeafENSt7int32_tEd"></span><span id="StochTree::Tree::SetLeaf__std::int32_t.double"></span><span class="target" id="classStochTree_1_1Tree_1a93bb1add74b5f16249a72515fab09746"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SetLeaf</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nid</span></span>, <span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9StochTree4Tree7SetLeafENSt7int32_tEd" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Set the leaf value of the node. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nid</strong> – ID of node being updated </p></li>
+<li><p><strong>value</strong> – Leaf value </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree4Tree13SetLeafVectorENSt7int32_tERKNSt6vectorIdEE">
+<span id="_CPPv3N9StochTree4Tree13SetLeafVectorENSt7int32_tERKNSt6vectorIdEE"></span><span id="_CPPv2N9StochTree4Tree13SetLeafVectorENSt7int32_tERKNSt6vectorIdEE"></span><span id="StochTree::Tree::SetLeafVector__std::int32_t.std::vector:double:CR"></span><span class="target" id="classStochTree_1_1Tree_1af3b849f2b31aa7af936662f48b9f8296"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SetLeafVector</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">nid</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">leaf_vector</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9StochTree4Tree13SetLeafVectorENSt7int32_tERKNSt6vectorIdEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Set the leaf vector of the node; useful for multi-output trees. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nid</strong> – ID of node being updated </p></li>
+<li><p><strong>leaf_vector</strong> – Leaf vector </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree4Tree23PredictLeafIndexInplaceEP13ForestDatasetRNSt6vectorI7int32_tEE7int32_t7int32_t">
+<span id="_CPPv3N9StochTree4Tree23PredictLeafIndexInplaceEP13ForestDatasetRNSt6vectorI7int32_tEE7int32_t7int32_t"></span><span id="_CPPv2N9StochTree4Tree23PredictLeafIndexInplaceEP13ForestDatasetRNSt6vectorI7int32_tEE7int32_t7int32_t"></span><span id="StochTree::Tree::PredictLeafIndexInplace__ForestDatasetP.std::vector:int32_t:R.int32_t.int32_t"></span><span class="target" id="classStochTree_1_1Tree_1a4c35ac877cf0b92cd74f0da50aca1dc6"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PredictLeafIndexInplace</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="dataset.html#_CPPv4N9StochTree13ForestDatasetE" title="StochTree::ForestDataset"><span class="n"><span class="pre">ForestDataset</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">dataset</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">int32_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">output</span></span>, <span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">offset</span></span>, <span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">max_leaf</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9StochTree4Tree23PredictLeafIndexInplaceEP13ForestDatasetRNSt6vectorI7int32_tEE7int32_t7int32_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Obtain a 0-based leaf index for each observation in a <a class="reference internal" href="dataset.html#classStochTree_1_1ForestDataset"><span class="std std-ref">ForestDataset</span></a>. Internally, trees are stored as vectors of node information, and the <code class="docutils literal notranslate"><span class="pre">leaves_</span></code> vector gives us node IDs for every leaf in the tree. Here, we would like to know, for every observation in a dataset, which leaf number it is mapped to. Since the leaf numbers themselves do not carry any information, we renumber them from <code class="docutils literal notranslate"><span class="pre">0</span></code> to <code class="docutils literal notranslate"><span class="pre">leaves_.size()-1</span></code>. </p>
+<p>Note: this is a tree-level helper function for an ensemble-level function. It assumes the creation of:<ol class="lowerroman simple">
+<li><p>a vector of column indices of size <code class="docutils literal notranslate"><span class="pre">dataset.NumObservations()</span></code> x <code class="docutils literal notranslate"><span class="pre">ensemble.NumTrees()</span></code>, stored in “tree-major” order</p></li>
+<li><p><p>a running counter of the number of tree-observations already indexed in the ensemble</p>
+<p>(used as offsets for the leaf number computed and returned here) Users running this function for a single tree may simply pre-allocate an output vector as</p>
+<code class="docutils literal notranslate"><span class="pre">std::vector&lt;int32_t&gt;</span> <span class="pre">output(dataset-&gt;NumObservations())</span></code> and set the offset to 0. </p></li>
+</ol>
+</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> – Dataset with which to predict leaf indices from the tree </p></li>
+<li><p><strong>output</strong> – Pre-allocated output vector storing a matrix of column indices, with “rows” corresponding to observations in <code class="docutils literal notranslate"><span class="pre">dataset</span></code> and “columns” corresponding to trees in an ensemble </p></li>
+<li><p><strong>offset</strong> – Bookkeeping index that determines where in <code class="docutils literal notranslate"><span class="pre">output</span></code> vector that column indices should be unpacked </p></li>
+<li><p><strong>max_leaf</strong> – Largest leaf value mapped so far. (Leaf indices serve as sparse column indices, so it is important that leaf values be unique to each tree.) </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree4Tree23PredictLeafIndexInplaceERN5Eigen8MatrixXdERNSt6vectorI7int32_tEE7int32_t7int32_t">
+<span id="_CPPv3N9StochTree4Tree23PredictLeafIndexInplaceERN5Eigen8MatrixXdERNSt6vectorI7int32_tEE7int32_t7int32_t"></span><span id="_CPPv2N9StochTree4Tree23PredictLeafIndexInplaceERN5Eigen8MatrixXdERNSt6vectorI7int32_tEE7int32_t7int32_t"></span><span id="StochTree::Tree::PredictLeafIndexInplace__Eigen::MatrixXdR.std::vector:int32_t:R.int32_t.int32_t"></span><span class="target" id="classStochTree_1_1Tree_1a185c4304c7f7c28636747796f6abe190"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PredictLeafIndexInplace</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">Eigen</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">MatrixXd</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">covariates</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">int32_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">output</span></span>, <span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">offset</span></span>, <span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">max_leaf</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9StochTree4Tree23PredictLeafIndexInplaceERN5Eigen8MatrixXdERNSt6vectorI7int32_tEE7int32_t7int32_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Obtain a 0-based leaf index for each observation in a <a class="reference internal" href="dataset.html#classStochTree_1_1ForestDataset"><span class="std std-ref">ForestDataset</span></a>. Internally, trees are stored as vectors of node information, and the <code class="docutils literal notranslate"><span class="pre">leaves_</span></code> vector gives us node IDs for every leaf in the tree. Here, we would like to know, for every observation in a dataset, which leaf number it is mapped to. Since the leaf numbers themselves do not carry any information, we renumber them from <code class="docutils literal notranslate"><span class="pre">0</span></code> to <code class="docutils literal notranslate"><span class="pre">leaves_.size()-1</span></code>. </p>
+<p>Note: this is a tree-level helper function for an ensemble-level function. It assumes the creation of:<ol class="lowerroman simple">
+<li><p>a vector of column indices of size <code class="docutils literal notranslate"><span class="pre">dataset.NumObservations()</span></code> x <code class="docutils literal notranslate"><span class="pre">ensemble.NumTrees()</span></code>, stored in “tree-major” order</p></li>
+<li><p><p>a running counter of the number of tree-observations already indexed in the ensemble</p>
+<p>(used as offsets for the leaf number computed and returned here) Users running this function for a single tree may simply pre-allocate an output vector as</p>
+<code class="docutils literal notranslate"><span class="pre">std::vector&lt;int32_t&gt;</span> <span class="pre">output(dataset-&gt;NumObservations())</span></code> and set the offset to 0. </p></li>
+</ol>
+</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>covariates</strong> – Eigen matrix with which to predict leaf indices </p></li>
+<li><p><strong>output</strong> – Pre-allocated output vector storing a matrix of column indices, with “rows” corresponding to observations in <code class="docutils literal notranslate"><span class="pre">covariates</span></code> and “columns” corresponding to trees in an ensemble </p></li>
+<li><p><strong>offset</strong> – Bookkeeping index that determines where in <code class="docutils literal notranslate"><span class="pre">output</span></code> vector that column indices should be unpacked </p></li>
+<li><p><strong>max_leaf</strong> – Largest leaf value mapped so far. (Leaf indices serve as sparse column indices, so it is important that leaf values be unique to each tree.) </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree4Tree23PredictLeafIndexInplaceERN5Eigen3MapIN5Eigen6MatrixIdN5Eigen7DynamicEN5Eigen7DynamicEN5Eigen8ColMajorEEEEERNSt6vectorI7int32_tEE7int32_t7int32_t">
+<span id="_CPPv3N9StochTree4Tree23PredictLeafIndexInplaceERN5Eigen3MapIN5Eigen6MatrixIdN5Eigen7DynamicEN5Eigen7DynamicEN5Eigen8ColMajorEEEEERNSt6vectorI7int32_tEE7int32_t7int32_t"></span><span id="_CPPv2N9StochTree4Tree23PredictLeafIndexInplaceERN5Eigen3MapIN5Eigen6MatrixIdN5Eigen7DynamicEN5Eigen7DynamicEN5Eigen8ColMajorEEEEERNSt6vectorI7int32_tEE7int32_t7int32_t"></span><span id="StochTree::Tree::PredictLeafIndexInplace__Eigen::Map:Eigen::Matrix:double.Eigen::Dynamic.Eigen::Dynamic.Eigen::ColMajor::R.std::vector:int32_t:R.int32_t.int32_t"></span><span class="target" id="classStochTree_1_1Tree_1a71bb551c06c86b904016cc0f0f8a9426"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PredictLeafIndexInplace</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">Eigen</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Map</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">Eigen</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Matrix</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">double</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">Eigen</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Dynamic</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">Eigen</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">Dynamic</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">Eigen</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">ColMajor</span></span><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">covariates</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">int32_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">output</span></span>, <span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">offset</span></span>, <span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">max_leaf</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9StochTree4Tree23PredictLeafIndexInplaceERN5Eigen3MapIN5Eigen6MatrixIdN5Eigen7DynamicEN5Eigen7DynamicEN5Eigen8ColMajorEEEEERNSt6vectorI7int32_tEE7int32_t7int32_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Obtain a 0-based leaf index for each observation in a <a class="reference internal" href="dataset.html#classStochTree_1_1ForestDataset"><span class="std std-ref">ForestDataset</span></a>. Internally, trees are stored as vectors of node information, and the <code class="docutils literal notranslate"><span class="pre">leaves_</span></code> vector gives us node IDs for every leaf in the tree. Here, we would like to know, for every observation in a dataset, which leaf number it is mapped to. Since the leaf numbers themselves do not carry any information, we renumber them from <code class="docutils literal notranslate"><span class="pre">0</span></code> to <code class="docutils literal notranslate"><span class="pre">leaves_.size()-1</span></code>. </p>
+<p>Note: this is a tree-level helper function for an ensemble-level function. It assumes the creation of:<ol class="lowerroman simple">
+<li><p>a vector of column indices of size <code class="docutils literal notranslate"><span class="pre">dataset.NumObservations()</span></code> x <code class="docutils literal notranslate"><span class="pre">ensemble.NumTrees()</span></code>, stored in “tree-major” order</p></li>
+<li><p><p>a running counter of the number of tree-observations already indexed in the ensemble</p>
+<p>(used as offsets for the leaf number computed and returned here) Users running this function for a single tree may simply pre-allocate an output vector as</p>
+<code class="docutils literal notranslate"><span class="pre">std::vector&lt;int32_t&gt;</span> <span class="pre">output(dataset-&gt;NumObservations())</span></code> and set the offset to 0. </p></li>
+</ol>
+</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>covariates</strong> – Eigen matrix with which to predict leaf indices </p></li>
+<li><p><strong>output</strong> – Pre-allocated output vector storing a matrix of column indices, with “rows” corresponding to observations in <code class="docutils literal notranslate"><span class="pre">covariates</span></code> and “columns” corresponding to trees in an ensemble </p></li>
+<li><p><strong>offset</strong> – Bookkeeping index that determines where in <code class="docutils literal notranslate"><span class="pre">output</span></code> vector that column indices should be unpacked </p></li>
+<li><p><strong>max_leaf</strong> – Largest leaf value mapped so far. (Leaf indices serve as sparse column indices, so it is important that leaf values be unique to each tree.) </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+<section id="tree-split">
+<h2>Tree Split<a class="headerlink" href="#tree-split" title="Permalink to this heading">¶</a></h2>
+<p>Numeric and categorical splits are represented by a <code class="docutils literal notranslate"><span class="pre">TreeSplit</span></code> class.</p>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree9TreeSplitE">
+<span id="_CPPv3N9StochTree9TreeSplitE"></span><span id="_CPPv2N9StochTree9TreeSplitE"></span><span id="StochTree::TreeSplit"></span><span class="target" id="classStochTree_1_1TreeSplit"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">TreeSplit</span></span></span><a class="headerlink" href="#_CPPv4N9StochTree9TreeSplitE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Representation of arbitrary tree split rules, including numeric split rules (<code class="docutils literal notranslate"><span class="pre">X[,i]</span> <span class="pre">&lt;=</span> <span class="pre">c</span></code>) and categorical split rules (<code class="docutils literal notranslate"><span class="pre">X[,i]</span> <span class="pre">in</span> <span class="pre">{2,4,6,7}</span></code>) </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree9TreeSplit9TreeSplitEd">
+<span id="_CPPv3N9StochTree9TreeSplit9TreeSplitEd"></span><span id="_CPPv2N9StochTree9TreeSplit9TreeSplitEd"></span><span id="StochTree::TreeSplit::TreeSplit__double"></span><span class="target" id="classStochTree_1_1TreeSplit_1afb2ed5f1b68e49d0f1c552a5e183b832"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">TreeSplit</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">split_value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9StochTree9TreeSplit9TreeSplitEd" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Construct a numeric <a class="reference internal" href="#classStochTree_1_1TreeSplit"><span class="std std-ref">TreeSplit</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>split_value</strong> – Numeric cutoff defining a new split rule </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree9TreeSplit9TreeSplitERNSt6vectorINSt8uint32_tEEE">
+<span id="_CPPv3N9StochTree9TreeSplit9TreeSplitERNSt6vectorINSt8uint32_tEEE"></span><span id="_CPPv2N9StochTree9TreeSplit9TreeSplitERNSt6vectorINSt8uint32_tEEE"></span><span id="StochTree::TreeSplit::TreeSplit__std::vector:std::uint32_t:R"></span><span class="target" id="classStochTree_1_1TreeSplit_1ac4be3c0be7dfd55a023e9a12c7580fee"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">TreeSplit</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">uint32_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">split_categories</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9StochTree9TreeSplit9TreeSplitERNSt6vectorINSt8uint32_tEEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Construct a categorical <a class="reference internal" href="#classStochTree_1_1TreeSplit"><span class="std std-ref">TreeSplit</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>split_categories</strong> – Vector of category indices defining a new (unordered) categorical split rule </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree9TreeSplit12NumericSplitEv">
+<span id="_CPPv3N9StochTree9TreeSplit12NumericSplitEv"></span><span id="_CPPv2N9StochTree9TreeSplit12NumericSplitEv"></span><span id="StochTree::TreeSplit::NumericSplit"></span><span class="target" id="classStochTree_1_1TreeSplit_1a60b9d2df07a122f2ad5c525676277b21"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">NumericSplit</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9StochTree9TreeSplit12NumericSplitEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Whether or not a <code class="docutils literal notranslate"><a class="reference internal" href="#classStochTree_1_1TreeSplit"><span class="std std-ref"><span class="pre">TreeSplit</span></span></a></code> rule is numeric. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree9TreeSplit9SplitTrueEd">
+<span id="_CPPv3N9StochTree9TreeSplit9SplitTrueEd"></span><span id="_CPPv2N9StochTree9TreeSplit9SplitTrueEd"></span><span id="StochTree::TreeSplit::SplitTrue__double"></span><span class="target" id="classStochTree_1_1TreeSplit_1a28e6719139e2d29fe48a3c498ba16674"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SplitTrue</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">fvalue</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9StochTree9TreeSplit9SplitTrueEd" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Whether a given covariate value is <code class="docutils literal notranslate"><span class="pre">True</span></code> or <code class="docutils literal notranslate"><span class="pre">False</span></code> on the rule defined by a <code class="docutils literal notranslate"><a class="reference internal" href="#classStochTree_1_1TreeSplit"><span class="std std-ref"><span class="pre">TreeSplit</span></span></a></code> object. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fvalue</strong> – Value of the covariate </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree9TreeSplit10SplitValueEv">
+<span id="_CPPv3N9StochTree9TreeSplit10SplitValueEv"></span><span id="_CPPv2N9StochTree9TreeSplit10SplitValueEv"></span><span id="StochTree::TreeSplit::SplitValue"></span><span class="target" id="classStochTree_1_1TreeSplit_1ade3b483cb19e192ddf114b4585f1b1b5"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SplitValue</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9StochTree9TreeSplit10SplitValueEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Numeric cutoff value defining a <code class="docutils literal notranslate"><a class="reference internal" href="#classStochTree_1_1TreeSplit"><span class="std std-ref"><span class="pre">TreeSplit</span></span></a></code> object. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree9TreeSplit15SplitCategoriesEv">
+<span id="_CPPv3N9StochTree9TreeSplit15SplitCategoriesEv"></span><span id="_CPPv2N9StochTree9TreeSplit15SplitCategoriesEv"></span><span id="StochTree::TreeSplit::SplitCategories"></span><span class="target" id="classStochTree_1_1TreeSplit_1ab5c593e2307642097df931154b8b8874"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">uint32_t</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SplitCategories</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9StochTree9TreeSplit15SplitCategoriesEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Categories defining a <code class="docutils literal notranslate"><a class="reference internal" href="#classStochTree_1_1TreeSplit"><span class="std std-ref"><span class="pre">TreeSplit</span></span></a></code> object. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          <a class="prev-page" href="dataset.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Dataset API</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024, Drew Herren
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Decision Tree API</a><ul>
+<li><a class="reference internal" href="#tree">Tree</a></li>
+<li><a class="reference internal" href="#tree-split">Tree Split</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=f6245a2f"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="_static/scripts/furo.js?v=4e2eecee"></script>
+    </body>
+</html>
