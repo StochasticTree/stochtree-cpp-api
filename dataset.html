@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Decision Tree API" href="tree.html" /><link rel="prev" title="StochTree C++ API and Implementations" href="index.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Forest Sampling Tracker API" href="tracking.html" /><link rel="prev" title="StochTree C++ API and Implementations" href="index.html" />
 
     <!-- Generated with Sphinx 7.1.2 and Furo 2024.05.06 -->
         <title>Dataset API - stochtree 0.0.1 documentation</title>
@@ -213,6 +213,7 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Dataset API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tracking.html">Forest Sampling Tracker API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tree.html">Decision Tree API</a></li>
 </ul>
 
@@ -256,8 +257,8 @@
         <article role="main" id="furo-main-content">
           <section id="dataset-api">
 <h1>Dataset API<a class="headerlink" href="#dataset-api" title="Permalink to this heading">¶</a></h1>
-<section id="forestdataset">
-<h2>ForestDataset<a class="headerlink" href="#forestdataset" title="Permalink to this heading">¶</a></h2>
+<section id="forest-dataset">
+<h2>Forest Dataset<a class="headerlink" href="#forest-dataset" title="Permalink to this heading">¶</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">ForestDataset</span></code> class is a wrapper around data needed to sample one or more tree ensembles.
 Its core elements are</p>
 <ul class="simple">
@@ -453,8 +454,8 @@ Stored internally as an <code class="docutils literal notranslate"><span class="
 </dd></dl>
 
 </section>
-<section id="randomeffectsdataset">
-<h2>RandomEffectsDataset<a class="headerlink" href="#randomeffectsdataset" title="Permalink to this heading">¶</a></h2>
+<section id="random-effects-dataset">
+<h2>Random Effects Dataset<a class="headerlink" href="#random-effects-dataset" title="Permalink to this heading">¶</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">RandomEffectsDataset</span></code> class is a wrapper around data needed to sample one or more tree ensembles.
 Its core elements are</p>
 <ul class="simple">
@@ -615,6 +616,34 @@ Stored internally as an <code class="docutils literal notranslate"><span class="
 </dd></dl>
 
 </section>
+<section id="other-classes-and-types">
+<h2>Other Classes and Types<a class="headerlink" href="#other-classes-and-types" title="Permalink to this heading">¶</a></h2>
+<dl class="cpp enum">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree11FeatureTypeE">
+<span id="_CPPv3N9StochTree11FeatureTypeE"></span><span id="_CPPv2N9StochTree11FeatureTypeE"></span><span class="target" id="namespaceStochTree_1ab0faace98e1c327a26ba6916ef74cbb7"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">StochTree</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">FeatureType</span></span></span><a class="headerlink" href="#_CPPv4N9StochTree11FeatureTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Integer encoding of feature types. </p>
+<p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree11FeatureType8kNumericE">
+<span id="_CPPv3N9StochTree11FeatureType8kNumericE"></span><span id="_CPPv2N9StochTree11FeatureType8kNumericE"></span><span class="target" id="namespaceStochTree_1ab0faace98e1c327a26ba6916ef74cbb7a1fd8eac7f5fef7362e154d5b107895b3"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">kNumeric</span></span></span><a class="headerlink" href="#_CPPv4N9StochTree11FeatureType8kNumericE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Numeric feature </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree11FeatureType19kOrderedCategoricalE">
+<span id="_CPPv3N9StochTree11FeatureType19kOrderedCategoricalE"></span><span id="_CPPv2N9StochTree11FeatureType19kOrderedCategoricalE"></span><span class="target" id="namespaceStochTree_1ab0faace98e1c327a26ba6916ef74cbb7a8a15542d37743df9a0cb72ce8ed8586c"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">kOrderedCategorical</span></span></span><a class="headerlink" href="#_CPPv4N9StochTree11FeatureType19kOrderedCategoricalE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Ordered categorical feature </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree11FeatureType21kUnorderedCategoricalE">
+<span id="_CPPv3N9StochTree11FeatureType21kUnorderedCategoricalE"></span><span id="_CPPv2N9StochTree11FeatureType21kUnorderedCategoricalE"></span><span class="target" id="namespaceStochTree_1ab0faace98e1c327a26ba6916ef74cbb7af4f1493bd12c3378ad9dbc84e38df717"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">kUnorderedCategorical</span></span></span><a class="headerlink" href="#_CPPv4N9StochTree11FeatureType21kUnorderedCategoricalE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Unordered categorical feature </p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 </section>
 
         </article>
@@ -622,12 +651,12 @@ Stored internally as an <code class="docutils literal notranslate"><span class="
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="tree.html">
+          <a class="next-page" href="tracking.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Decision Tree API</div>
+                <div class="title">Forest Sampling Tracker API</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -673,8 +702,9 @@ Stored internally as an <code class="docutils literal notranslate"><span class="
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Dataset API</a><ul>
-<li><a class="reference internal" href="#forestdataset">ForestDataset</a></li>
-<li><a class="reference internal" href="#randomeffectsdataset">RandomEffectsDataset</a></li>
+<li><a class="reference internal" href="#forest-dataset">Forest Dataset</a></li>
+<li><a class="reference internal" href="#random-effects-dataset">Random Effects Dataset</a></li>
+<li><a class="reference internal" href="#other-classes-and-types">Other Classes and Types</a></li>
 </ul>
 </li>
 </ul>

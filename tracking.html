@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Dataset API" href="dataset.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Decision Tree API" href="tree.html" /><link rel="prev" title="Dataset API" href="dataset.html" />
 
     <!-- Generated with Sphinx 7.1.2 and Furo 2024.05.06 -->
-        <title>stochtree 0.0.1 documentation</title>
+        <title>Forest Sampling Tracker API - stochtree 0.0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=387cc868" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=36a5483c" />
@@ -179,7 +179,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="#"><div class="brand">stochtree 0.0.1 documentation</div></a>
+      <a href="index.html"><div class="brand">stochtree 0.0.1 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -191,7 +191,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -200,7 +200,7 @@
   <aside class="sidebar-drawer">
     <div class="sidebar-container">
       
-      <div class="sidebar-sticky"><a class="sidebar-brand" href="#">
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
   
   
   <span class="sidebar-brand-text">stochtree 0.0.1 documentation</span>
@@ -211,9 +211,9 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <ul>
+  <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="dataset.html">Dataset API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tracking.html">Forest Sampling Tracker API</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Forest Sampling Tracker API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tree.html">Decision Tree API</a></li>
 </ul>
 
@@ -235,7 +235,7 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="_sources/index.rst.txt" title="View this page">
+  <a class="muted-link" href="_sources/tracking.rst.txt" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
@@ -249,35 +249,65 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="stochtree-c-api-and-implementations">
-<h1>StochTree C++ API and Implementations<a class="headerlink" href="#stochtree-c-api-and-implementations" title="Permalink to this heading">¶</a></h1>
-<p>This page documents the data structures and interfaces that constitute the <code class="docutils literal notranslate"><span class="pre">stochtree</span></code> C++ core.
-It may be useful to researchers building novel tree algorithms or users seeking a deeper understanding of the algorithms implemented in <code class="docutils literal notranslate"><span class="pre">stochtree</span></code>.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="dataset.html">Dataset API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="dataset.html#forest-dataset">Forest Dataset</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dataset.html#random-effects-dataset">Random Effects Dataset</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dataset.html#other-classes-and-types">Other Classes and Types</a></li>
+          <section id="forest-sampling-tracker-api">
+<h1>Forest Sampling Tracker API<a class="headerlink" href="#forest-sampling-tracker-api" title="Permalink to this heading">¶</a></h1>
+<p>A truly minimalist tree ensemble library only needs</p>
+<ul class="simple">
+<li><p>A representation of a decision tree</p></li>
+<li><p>A container for grouping / storing ensembles of trees</p></li>
+<li><p>In-memory access to / representation of training data</p></li>
+<li><p>Routines / functions to construct the trees</p></li>
 </ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="tracking.html">Forest Sampling Tracker API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="tracking.html#forest-tracker">Forest Tracker</a></li>
+<p>Most algorithms for optimizing or sampling tree ensembles frequently perform the following operations</p>
+<ul class="simple">
+<li><p>Determine which leaf a training observation falls into for a decision tree (to compute its prediction and update the residual / outcome)</p></li>
+<li><p>Evaluate potential split candidates for a leaf of a decision</p></li>
 </ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="tree.html">Decision Tree API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="tree.html#tree">Tree</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tree.html#tree-split">Tree Split</a></li>
+<p>With only the “minimalist” tools above, these two tasks proceed largely as follows</p>
+<ul class="simple">
+<li><p>For every observation in the dataset, traverse the tree (runtime depends on the tree topology but in a fully balanced tree with <span class="math notranslate nohighlight">\(k\)</span> nodes, this has time complexity <span class="math notranslate nohighlight">\(O(\log (k))\)</span>).</p></li>
+<li><p>For every observation in the dataset, determine whether an observation falls into a given node and whether or not a proposed decision rule would be true</p></li>
 </ul>
-</li>
+<p>These operations both perform unnecessary computation which can be avoided with some additional real-time tracking. Essentially, we want</p>
+<ol class="arabic simple">
+<li><p>A mapping from dataset row index to leaf node id for every tree in an ensemble (so that we can skip the tree traversal during prediction)</p></li>
+<li><p>A mapping from leaf node id to dataset row indices every tree in an ensemble (so that we can skip the full pass through the training data at split evaluation)</p></li>
+</ol>
+<section id="forest-tracker">
+<h2>Forest Tracker<a class="headerlink" href="#forest-tracker" title="Permalink to this heading">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">ForestTracker</span></code> class is a wrapper around several implementations of the mappings discussed above.</p>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree13ForestTrackerE">
+<span id="_CPPv3N9StochTree13ForestTrackerE"></span><span id="_CPPv2N9StochTree13ForestTrackerE"></span><span id="StochTree::ForestTracker"></span><span class="target" id="classStochTree_1_1ForestTracker"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ForestTracker</span></span></span><a class="headerlink" href="#_CPPv4N9StochTree13ForestTrackerE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>“Superclass” wrapper around tracking data structures for forest sampling algorithms </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9StochTree13ForestTracker13ForestTrackerERN5Eigen8MatrixXdERNSt6vectorI11FeatureTypeEEii">
+<span id="_CPPv3N9StochTree13ForestTracker13ForestTrackerERN5Eigen8MatrixXdERNSt6vectorI11FeatureTypeEEii"></span><span id="_CPPv2N9StochTree13ForestTracker13ForestTrackerERN5Eigen8MatrixXdERNSt6vectorI11FeatureTypeEEii"></span><span id="StochTree::ForestTracker::ForestTracker__Eigen::MatrixXdR.std::vector:FeatureType:R.i.i"></span><span class="target" id="classStochTree_1_1ForestTracker_1a162fe6aa5a3cd4125354289b7b152170"></span><span class="sig-name descname"><span class="n"><span class="pre">ForestTracker</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">Eigen</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">MatrixXd</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">covariates</span></span>, <span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="dataset.html#_CPPv4N9StochTree11FeatureTypeE" title="StochTree::FeatureType"><span class="n"><span class="pre">FeatureType</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">feature_types</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">num_trees</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">num_observations</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9StochTree13ForestTracker13ForestTrackerERN5Eigen8MatrixXdERNSt6vectorI11FeatureTypeEEii" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Construct a new <code class="docutils literal notranslate"><a class="reference internal" href="#classStochTree_1_1ForestTracker"><span class="std std-ref"><span class="pre">ForestTracker</span></span></a></code> object. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>covariates</strong> – Matrix of covariate data </p></li>
+<li><p><strong>feature_types</strong> – Type of each feature (column) in <code class="docutils literal notranslate"><span class="pre">covariates</span></code>. This is represented by the enum <code class="docutils literal notranslate"><a class="reference internal" href="dataset.html#namespaceStochTree_1ab0faace98e1c327a26ba6916ef74cbb7"><span class="std std-ref"><span class="pre">StochTree::FeatureType</span></span></a></code></p></li>
+<li><p><strong>num_trees</strong> – Number of trees in an ensemble to be sampled </p></li>
+<li><p><strong>num_observations</strong> – Number of rows in <code class="docutils literal notranslate"><span class="pre">covariates</span></code></p></li>
 </ul>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
+</dd></dl>
+
+</section>
 </section>
 
         </article>
@@ -285,16 +315,26 @@ It may be useful to researchers building novel tree algorithms or users seeking 
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="dataset.html">
+          <a class="next-page" href="tree.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Dataset API</div>
+                <div class="title">Decision Tree API</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          
+          <a class="prev-page" href="dataset.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Dataset API</div>
+                
+              </div>
+            </a>
         </div>
         <div class="bottom-of-page">
           <div class="left-details">
@@ -313,8 +353,27 @@ It may be useful to researchers building novel tree algorithms or users seeking 
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Forest Sampling Tracker API</a><ul>
+<li><a class="reference internal" href="#forest-tracker">Forest Tracker</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
@@ -323,5 +382,6 @@ It may be useful to researchers building novel tree algorithms or users seeking 
     <script src="_static/doctools.js?v=888ff710"></script>
     <script src="_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="_static/scripts/furo.js?v=4e2eecee"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     </body>
 </html>
